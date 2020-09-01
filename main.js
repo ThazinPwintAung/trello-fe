@@ -201,8 +201,13 @@ function listOption(event) {
     }
 }
 
+function closeOptionMenu() {
+    listMenuPopup.style.display = "none";
+}
+
 function goDeleteList() {
     if(clickedListId) {
+      closeOptionMenu();
       if(confirm("Are you sure to delete this list?")) {
         setLoading(true);
         fetch(`${endpoint}/list/${clickedListId}`, {
@@ -224,5 +229,5 @@ function goDeleteList() {
         })
       }
     }
-  }
+}
 
