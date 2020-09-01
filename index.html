@@ -3,60 +3,118 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-        <!-- Bootstrap CSS -->
+  
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    
-        <!-- Font Awesome CDN -->
+
         <script src="https://kit.fontawesome.com/e86f33fd21.js" crossorigin="anonymous"></script>
 
-        <!--CSS-->
         <link rel="stylesheet" href="style.css">
         <title>Trello Clone</title>
       </head>
       <body>
-        <nav class="navbar upper">
-          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-            <button class="btn btn-secondary btn-sm"><i class="fa fa-th"></i></button>
-            <button class="btn btn-secondary btn-sm"><i class="fa fa-home"></i></button>
-            <button class="btn btn-secondary btn-sm" style="font-weight: bold;"><i class="fa fa-th-list"></i>&nbsp;&nbsp;&nbsp;Boards</button>
-            <div class="search">
-              <input type="text" class="searchBar">
-              <i class="fas fa-search"></i>
+
+        <nav id="nav-1" class="d-flex justify-content-between nav-1 py-1">
+          <div class="d-flex">
+            <button class="btn btn-sm text-light m-1"><i class="fa fa-th"></i></button>
+            <button class="btn btn-sm text-light m-1"><i class="fa fa-home"></i></button>
+            <button class="btn btn-sm text-light m-1 font-weight-bold"><i class="far fa-clipboard"></i>&nbsp;&nbsp;&nbsp;Boards</button>
+          </div>
+
+          <div class="d-flex justify-content-center align-items-center" id="centerhold"></div>
+
+          <div class="d-flex">
+            <button class="btn btn-sm text-light m-1"><i class="fa fa-plus"></i></button>
+            <button class="btn btn-sm text-light m-1"><i class="fa fa-info-circle"></i></button>
+            <button class="btn btn-sm text-light m-1"><i class="fa fa-bell"></i></button>
+            <button class="btn btn-sm text-light m-1 avatar profile"></button>
+          </div>
+        </nav>
+
+        <nav id="nav-2" class="d-flex flex-wrap justify-content-between nav-2 my-1">
+          <div class="d-flex flex-wrap">
+            <div class="text-light font-weight-bold m-1 px-3">FE - Common</div>
+            <button class="btn btn-sm text-light m-1"><i class="far fa-star"></i></button>
+            <div class="vl m-1"></div>
+            <div class="no-border text-light mx-2 my-1">Private Team</div>
+            <div class="vl m-1"></div>
+            <button class="btn btn-sm text-light m-1"><i class="fas fa-user-friends"></i>&nbsp;&nbsp;&nbsp;Team Visible</button>
+            <div class="vl m-1"></div>
+            <button class="btn btn-sm text-light avatar profile"></button>
+            <button class="btn btn-sm text-light avatar profile1"></button>
+            <button class="btn btn-sm text-light avatar profile2"></button>
+            <button class="btn btn-sm text-light avatar">+3</button>
+            <button class="btn btn-sm text-light m-1">Invite</button>
+          </div>
+
+          <div class="d-flex justify-content-end" style="flex-grow: 1;">
+            <button class="btn btn-sm text-light m-1"><i class="fas fa-concierge-bell"></i>&nbsp;&nbsp;&nbsp;Bulter (5 Tips)</button>
+            <button class="btn btn-sm text-light m-1"><i class="fas fa-ellipsis-h"></i>&nbsp;&nbsp;&nbsp;Show Menu</button>
+          </div>
+        </nav>
+
+        <div id="wrapper">
+
+        </div>
+
+        <div class="rounded p-1" id="add-list-popup">
+          <input type="text"  id="list-title-input">
+          <div class="d-flex justify-content-between align-items-center pt-1">
+            <button class="btn btn-sm btn-success my-1" onclick="saveNewList()">Add</button>
+            <button class="btn btn-lg my-1 mx-2 p-0 text-danger" onclick="toggelAddListPopup(false)"><i class="fa fa-close"></i></button>
+          </div>
+        </div>
+
+        <div class="list-menu rounded p-1" id="list-menu-popup">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-action">Add Card...</li>
+            <li class="list-group-item list-group-item-action">Copy List...</li>
+            <li class="list-group-item list-group-item-action">Move List...</li>
+            <li class="list-group-item list-group-item-action">Watch...</li>
+            <li class="list-group-item text-danger list-group-item-action" onclick="goDeleteList()"><i class="fa fa-trash"></i>&nbsp;&nbsp;&nbsp;Delete...</li>
+          </ul>
+        </div>
+
+        <div id="cardModal" class="modal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="cardTitle"></h5>
+                <small id="inListDesc" class="pl-3 text-secondary">in list <strong id="inListTitle"></strong></small>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body p-1">
+                <div class="d-flex mt-3">
+                  <h6>
+                    <i class="fa fa-bars"></i>
+                  </h6>
+                  <div class="flex-grow-1">
+                    <h6>Description</h6>
+                    <p id="cardDesc"></p>
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <h6>
+                    <i class="fa fa-list-ul"></i>
+                  </h6>
+                  <div class="flex-grow-1">
+                    <h6>Checklist</h6>
+                    <div id="chkli-wrapper">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Save Changes</button>
+              </div>
             </div>
           </div>
+        </div>
 
-          <div class="logo-appear" id="centerhold"><img src="img/logo.png"></div>
-
-          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-            <button class="btn btn-secondary btn-sm"><i class="fa fa-plus"></i></button>
-            <button class="btn btn-secondary btn-sm"><i class="fa fa-info-circle"></i></button>
-            <button class="btn btn-secondary btn-sm"><i class="fa fa-bell"></i></button>
-            <img src="img/profile.jpeg" class="profile">
-          </div>
-        </nav>
-        <nav class="navbar lower">
-          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="no-border">FE - Common</div>
-            <button class="btn btn-secondary btn-sm"><i class="far fa-star"></i></button>
-            <div class="vl"></div>
-            <div class="no-border text-md">Private Team</div>
-            <div class="vl"></div>
-            <button class="btn btn-secondary btn-sm" style="font-size: 15px;"><i class="fas fa-user-friends"></i>&nbsp;&nbsp;&nbsp;Team Visible</button>
-            <div class="vl"></div>
-            <img src="img/profile.jpg" class="profile-1">
-            <img src="img/pp1.jpg" class="profile-1">
-            <img src="img/profile.jpeg" class="profile-1">
-            <button class="btn btn-secondary btn-sm profile-1 p-right">+3</button>
-            <button class="btn btn-secondary btn-sm"  style="font-size: 15px;">Invite</button>
-          </div>
-
-          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-            <button class="btn btn-secondary btn-sm" style="font-size: 15px;"><i class="fas fa-concierge-bell"></i>&nbsp;&nbsp;&nbsp;Bulter</button>
-            <button class="btn btn-secondary btn-sm" style="font-size: 15px;"><i class="fas fa-ellipsis-h"></i>&nbsp;&nbsp;&nbsp;Show Menu</button>
-          </div>
-        </nav>
-        
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <script src="main.js"></script>
       </body>
 </html>
