@@ -53,17 +53,19 @@ const getCard = (card,list) => {
 const getList = (list) => {
     const cardsStr = list.cards ? list.cards.map(c => getCard(c, list)).join(""):"";
     return `
-    <div class="trello-list rounded m-1 px-2 py-1 pb-2" list-id="${list.id}">
+    <div class="trello-list rounded m-1 px-2 py-1 pb-2 trello-fadein" list-id="${list.id}">
         <div class="d-flex justify-content-between align-items-center mb-1">
             <h6 class="pl-2">${list.title}</h6>
             <button class="btn btn-sm" list-id="${list.id}" onclick="listOption(event)"><i class="fa fa-ellipsis-h"></i></button>
         </div>
-        ${cardsStr}
+        <div class="list-wrapper px-1">
+            ${cardsStr}
+        </div>
         <div class="d-flex justify-content-between align-items-center">
-            <button class="btn btn-sm text-left" id="add-new-card">
-            <i class="fa fa-plus"></i>&nbsp;&nbsp;Add another card
-            </button>
-            <button class="btn btn-sm"><i class="fa fa-window-maximize"></i></button>
+                <button class="btn btn-sm text-left" id="add-new-card">
+                <i class="fa fa-plus"></i>&nbsp;&nbsp;Add another card
+                </button>
+                <button class="btn btn-sm"><i class="fa fa-window-maximize"></i></button>
         </div>
     </div>`;
 };
@@ -76,8 +78,18 @@ window.onload = () => {
     console.log("DOM is ready!");
     addListPopup = document.getElementById("add-list-popup");
     listMenuPopup = document.getElementById("list-menu-popup");
+    limitWrapperHeight();
     fetchData();
 } 
+
+function limitWrapperHeight() {
+    const body = document.documentElement.clientHeight;
+    const nav1 = document.getElementById("nav-1").clientHeight;
+    const nav2 = document.getElementById("nav-2").clientHeight;
+    const wrapper = document.getElementById("wrapper");
+    wrapper.style.maxHeight = (body - nav1 - nav2) + "px";
+    wrapper.style.minHeight = (body - nav1 - nav2) + "px";
+}
 
 function fetchData () {
     setLoading(true);
@@ -153,6 +165,12 @@ function  toggelAddListPopup(isOpen) {
     }
 }
 
+function inputEntered(event){
+    if(event.keyCode == 13){
+        saveNewList();
+    }
+}
+
 function saveNewList() {
     const listTitleInput = document.getElementById("list-title-input");
     const listTitle = listTitleInput.value;
@@ -174,6 +192,11 @@ function saveNewList() {
             setLoading(false);
             listTitleInput.value = "";
             toggelAddListPopup(false);
+            //UI display and lists update
+            const doc = new DOMParser().parseFromString(getList(data),"text/html");
+            const newlyAddedList = doc.body.children[0];
+            document.getElementById("add-list-btn").before(newlyAddedList);
+            lists.push(data);
         })
         .catch(err => {
             console.log(err);
@@ -202,7 +225,21 @@ function listOption(event) {
 }
 
 function closeOptionMenu() {
-    listMenuPopup.style.display = "none";
+    if(listMenuPopup.style.display == "block"){
+        listMenuPopup.style.display = "none";
+    }
+    if(addListPopup.style.display === "block") {
+        toggelAddListPopup(false);
+    }
+}
+
+function wrapperScrolled() {
+    closeOptionMenu();
+    if(addListPopup.style.display === "block") {
+        const rect = document.getElementById("add-list-btn").getBoundingClientRect();
+        addListPopup.style.top = rect.top + "px";
+        addListPopup.style.left = rect.left + "px";
+    }
 }
 
 function goDeleteList() {

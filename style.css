@@ -12,6 +12,8 @@ body {
     background-position: bottom;
     width: 100%;
     height: 100vh;
+    overflow: hidden;
+    position: relative;
 }
 
 /*Navagation Bars*/
@@ -20,12 +22,13 @@ body {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
+
 .nav-1 .btn {
     background-color: rgba(255, 255, 255, 0.25);
 }
 
 .nav-2 .btn {
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .nav-1 .btn:hover {
@@ -33,7 +36,7 @@ body {
 }
 
 .nav-2 .btn:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .vl {
@@ -47,7 +50,14 @@ body {
     height: 32px;
     width: 32px;
     border-radius: 50%;
+    color: #172b4d;
+    background-color: #dfe1e6;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 32px;
+    text-align: center;
     margin-top: 2px;
+    margin-left: 3px;
 }
 
 button.profile {
@@ -69,6 +79,55 @@ button.profile2 {
     background-repeat: no-repeat;
 }
 
+.trello-fadein {
+    animation: fadeIn 150ms ease-out forwards;
+}
+
+.trello-black {
+    color: #172b4d;
+}
+
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+}
+
+/*scrollbar*/
+.list-wrapper::-webkit-scrollbar {
+    width: 5px;
+}
+  
+/* scrollbar track */
+.list-wrapper::-webkit-scrollbar-track {
+    background: #eee;
+}
+  
+/* scrollbar handle */
+.list-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: #A6A9AA;
+    background-image: linear-gradient(to top, #A6A9AA 0%, #A6A9AA 100%);
+}
+
+#wrapper::-webkit-scrollbar {
+    width: 5px;
+}
+  
+/* scrollbar track */
+#wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+  
+/* scrollbar handle */
+#wrapper::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: transparent;
+    background-image: linear-gradient(to top, #A6A9AA 0%, #A6A9AA 100%);
+}
 
 /*Loader and Logo*/
 #loading-image {
@@ -89,6 +148,12 @@ button.profile2 {
     overflow: auto;
     display: flex;
     align-items: flex-start;
+}
+
+.list-wrapper {
+    width: 100%;
+    max-height: 550px;
+    overflow-y: auto;
 }
 
 /*Card*/

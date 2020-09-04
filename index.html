@@ -13,7 +13,7 @@
       </head>
       <body>
 
-        <nav id="nav-1" class="d-flex justify-content-between nav-1 py-1">
+        <nav id="nav-1" class="d-flex justify-content-between nav-1 py-1" onclick="closeOptionMenu()">
           <div class="d-flex">
             <button class="btn btn-sm text-light m-1"><i class="fa fa-th"></i></button>
             <button class="btn btn-sm text-light m-1"><i class="fa fa-home"></i></button>
@@ -30,7 +30,7 @@
           </div>
         </nav>
 
-        <nav id="nav-2" class="d-flex flex-wrap justify-content-between nav-2 my-1">
+        <nav id="nav-2" class="d-flex flex-wrap justify-content-between nav-2 my-1" onclick="closeOptionMenu()">
           <div class="d-flex flex-wrap">
             <div class="text-light font-weight-bold m-1 px-3">FE - Common</div>
             <button class="btn btn-sm text-light m-1"><i class="far fa-star"></i></button>
@@ -42,7 +42,7 @@
             <button class="btn btn-sm text-light avatar profile"></button>
             <button class="btn btn-sm text-light avatar profile1"></button>
             <button class="btn btn-sm text-light avatar profile2"></button>
-            <button class="btn btn-sm text-light avatar">+3</button>
+            <button class="btn btn-sm text-light avatar" style="line-height: 16px;">+3</button>
             <button class="btn btn-sm text-light m-1">Invite</button>
           </div>
 
@@ -52,19 +52,19 @@
           </div>
         </nav>
 
-        <div id="wrapper" onclick="closeOptionMenu()">
+        <div id="wrapper" class="px-2" onscroll="wrapperScrolled()" onclick="closeOptionMenu()">
 
         </div>
 
-        <div class="rounded p-1" id="add-list-popup">
-          <input type="text"  id="list-title-input">
+        <div class="rounded trello-fadein p-1" id="add-list-popup">
+          <input type="text"  id="list-title-input" onkeyup="inputEntered(event)">
           <div class="d-flex justify-content-between align-items-center pt-1">
             <button class="btn btn-sm btn-success my-1" onclick="saveNewList()">Add</button>
             <button class="btn btn-lg my-1 mx-2 p-0 text-danger" onclick="toggelAddListPopup(false)"><i class="fa fa-close"></i></button>
           </div>
         </div>
 
-        <div class="list-menu rounded p-1" id="list-menu-popup">
+        <div class="list-menu rounded trello-fadein p-1" id="list-menu-popup">
           <ul class="list-group list-group-flush">
             <li class="list-group-item list-group-item-action">Add Card...</li>
             <li class="list-group-item list-group-item-action">Copy List...</li>
@@ -74,7 +74,7 @@
           </ul>
         </div>
 
-        <div id="cardModal" class="modal" tabindex="-1">
+        <div id="cardModal" class="modal fade trello-black" tabindex="-1">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
